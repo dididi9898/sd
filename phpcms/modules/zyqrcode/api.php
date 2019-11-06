@@ -99,7 +99,7 @@ class api
         }
 
         $msg = 0;
-        $url=APP_PATH."index.php?index.php?m=zymember&c=index&a=register"."&token=".$memberinfo["username"];
+        $url=APP_PATH."index.php?m=zymember&c=index&a=register"."&token=".$memberinfo["username"];
 
         if(!empty($data['userid'])){
 //            $token=sys_auth($data['userid'], 'ENCODE', 'add');

@@ -22,12 +22,12 @@ class frontApi
         $this->member = new Fx();
 
     }
-    function insertMember()//创建用户的时候插入分销用户表和提现中，
+    function insertMember($userid)//创建用户的时候插入分销用户表和提现中，
     {
         $neadArg = ["userid"=>[true, 1]];
-        $info = checkArg($neadArg, $_POST);
+        $info = checkArg($neadArg, $userid);
         Res::AssertOk($this->member->insertMember($info), "2");
-        returnAjaxData("200", "添加成功");
+//        returnAjaxData("200", "添加成功");
     }
     function updateMemberLoginTime()
     {
@@ -64,7 +64,7 @@ class frontApi
         $neadArg = ["userid"=>[true, 6], "pid"=>[true, 0]];
         $info = checkArg($neadArg, $_POST);
         $member_db=pc_base::load_model("member_model");
-        $data=$member_db->get_one(["MID"=>$info["pid"]], "userid,nickname");
+        $data=$member_db->get_one(["username"=>$info["pid"]], "userid,nickname");
         $info["pid"] = $data["userid"];
         $userid["userid"] = $info["userid"];
         $pid["pid"] = $info["pid"];

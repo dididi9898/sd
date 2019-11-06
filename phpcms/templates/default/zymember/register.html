@@ -26,7 +26,7 @@
 
 
     <!--注册-->
-    <div class="layui-container register" style="min-height: calc( 100vh); background: #f1f1f1;">
+    <div class="layui-container register" style="min-height: calc( 100vh - 1rem); background: #f1f1f1;">
         <div class="layui-row">
             <div class="h2"></div>
             <div class="bg-fff radius1 login-box ml2 mr2">
@@ -130,8 +130,6 @@
                         } else {
                             layer.msg(data.message);
                             setTimeout("javascript:location.href='" + data.data.forward + "'", 1000);
-
-
                         }
                     });
                     console.log(data.field);
@@ -150,18 +148,24 @@
                     d[this.name] = this.value;
                 });
                 if (d.mobile) {
-                    console.log('发送成功' + d.mobile);
-
+                    //console.log('发送成功' + d.mobile);
                     //60秒倒计时
                     if (!_this.hasClass("on")) {
-                        layer.msg('发送成功');
-                        $.leftTime(60, function (d) {
-                            if (d.status) {
-                                _this.addClass("on");
-                                _this.html("（" + (d.s == "00" ? "60" : d.s) + "）后重获");
+                        aj.post('index.php?m=zymessagesys&c=messagesys_api&a=pub_sendsms',{'mobile':d.mobile}, function (data) {
+                            console.log(data);
+                            if (data.status == 'error') {
+                                layer.msg(data.message);
                             } else {
-                                _this.removeClass("on");
-                                _this.html("获取校验码");
+                                layer.msg('发送成功');
+                                $.leftTime(60, function (d) {
+                                    if (d.status) {
+                                        _this.addClass("on");
+                                        _this.html("（" + (d.s == "00" ? "60" : d.s) + "）后重获");
+                                    } else {
+                                        _this.removeClass("on");
+                                        _this.html("获取校验码");
+                                    }
+                                });
                             }
                         });
                     } else {

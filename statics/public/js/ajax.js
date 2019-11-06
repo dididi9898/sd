@@ -35,7 +35,7 @@
             'success': success,
 			'dataType': "json",
             'beforeSend': function () {
-                index = layer.msg('加载中');
+                index = layer.load(1);
             },
             'complete': function () {
                 layer.close(index);
